@@ -14,7 +14,7 @@ export default async function Inicio() {
 
   return (
     <>
-      <Encabezado sobre="Dashboard de prospección" titulo="Inicio" />
+      <Encabezado sobre="Sistema de Prospección" titulo="Inicio" />
       <AvisoWhatsApp />
 
       <Tarjeta className="flex flex-col gap-4">

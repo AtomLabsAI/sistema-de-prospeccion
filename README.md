@@ -1,4 +1,4 @@
-# Reactor de Clientes · Template de Atom
+# Sistema de Prospección · Template de Atom
 
 Buscá negocios, escribiles por WhatsApp y por mail, seguí tus anuncios y tu contenido, y agendá tus llamadas de venta. Todo en un dashboard que corre en tu compu y guarda los datos en tu propia base.
 

@@ -1,0 +1,39 @@
+{
+  "name": "template-prospeccion-de-clientes",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1",
+    "build": "next build",
+    "start": "next start -H 127.0.0.1",
+    "lint": "eslint",
+    "tipos": "tsc --noEmit",
+    "whatsapp:detener": "node scripts/whatsapp-detener.mjs",
+    "ads:guardar": "node scripts/guardar-ads.mjs"
+  },
+  "dependencies": {
+    "@diegomarvid/whatsapp-assistant": "https://github.com/IgnacioMiranda6/whatsapp-assistant/archive/ffb95351d8162228015b0234dee8b7875c1fd4b4.tar.gz",
+    "@supabase/supabase-js": "^2.117.3",
+    "next": "16.4.0",
+    "nodemailer": "^10.1.0",
+    "qrcode": "^1.5.4",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "^4",
+    "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": ">=22.5"
+  }
+}

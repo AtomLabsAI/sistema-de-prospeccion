@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+/* Marca Atom, en oscuro y liso: sin texturas ni degradados. */
+@theme inline {
+  --color-fondo: #1c1b1b;
+  --color-superficie: #2b2a2a;
+  --color-linea: #454241;
+  --color-crema: #fce9e4;
+  --color-tenue: #b9aeab;
+  --color-celeste: #87abdb;
+  --color-celeste-suave: #2f3a4d;
+  --color-naranja: #db6f54;
+  --color-naranja-suave: #4a2f28;
+  --font-sans: var(--font-montserrat), "Segoe UI", sans-serif;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-fondo);
+  color: var(--color-crema);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-celeste);
+  outline-offset: 2px;
+}

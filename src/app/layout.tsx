@@ -6,7 +6,7 @@ import "./globals.css";
 const montserrat = Montserrat({ variable: "--font-montserrat", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Dashboard de prospección · Atom",
+  title: "Reactor de Clientes · Atom",
   description: "Buscá clientes, contactalos y seguí tus números desde un solo lugar.",
 };
 

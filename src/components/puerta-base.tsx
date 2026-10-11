@@ -18,7 +18,7 @@ export async function PuertaBase({ children }: { children: ReactNode }) {
           "Esta pantalla guarda sus datos en Supabase. Conectarla lleva unos 5 minutos y se hace una sola vez."}
         {estado === "sin_tablas" &&
           "La conexión con Supabase anda bien, pero todavía no están las tablas. Es el último paso de la guía."}
-        {estado === "error" && `Supabase respondió: ${detalle}`}
+        {estado === "error" && detalle}
       </p>
       <BotonLink href="/conexiones/supabase">Ir a la guía de Supabase</BotonLink>
     </Tarjeta>

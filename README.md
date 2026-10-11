@@ -25,7 +25,7 @@ Vos ──► Dashboard (en tu compu) ──► Supabase (tu base de datos)
 
 | Qué | Dónde | Para qué |
 |---|---|---|
-| Node.js **22.5 o más** | [nodejs.org](https://nodejs.org) | Correr el dashboard |
+| Node.js **22.13 o más** (la que ofrece hoy nodejs.org sirve) | [nodejs.org](https://nodejs.org) | Correr el dashboard |
 | Git | [git-scm.com](https://git-scm.com) | Bajar el template y sus piezas |
 | Claude Code | [claude.com/claude-code](https://claude.com/claude-code) | Conectar la base y traer tus anuncios |
 | Cuenta de Supabase | [supabase.com](https://supabase.com) | Tu base de datos |
@@ -105,15 +105,16 @@ También le podés pedir cambios en castellano: *"agregá una columna de Instagr
 |---|---|---|
 | Prospectos, mensajes, llamadas, métricas | Tu proyecto de Supabase | No |
 | Claves (Supabase, Apify, Gmail) | `config.local.json`, en tu compu | **No** (está en `.gitignore`) |
-| Sesiones de WhatsApp | Carpeta `.whatsapp/`, en tu compu | **No** (está en `.gitignore`) |
+| Sesiones de WhatsApp y una copia de los chats de la última semana de cada número vinculado | Carpeta `.whatsapp/`, en tu compu | **No** (está en `.gitignore`) |
 
-No compartas `config.local.json` ni la carpeta `.whatsapp/`: quien las tenga puede leer tu base y escribir desde tus números.
+No compartas `config.local.json` ni la carpeta `.whatsapp/`: quien las tenga puede leer tu base, leer esos chats y escribir desde tus números.
 
 ## Problemas comunes
 
 | Síntoma | Solución |
 |---|---|
-| `npm install` falla | Revisá que tengas Git instalado y Node 22.5 o más (`node --version`) |
+| `npm install` falla | Revisá que tengas Git instalado y Node 22.13 o más (`node --version`) |
+| WhatsApp dice que necesita otro Node | Instalá la última versión desde nodejs.org, cerrá el dashboard y volvé a abrirlo |
 | "Falta crear las tablas" | Corré `/conectar` en Claude Code, o seguí el paso 3 de la guía de Supabase |
 | "Esa es la clave pública" | Copiaste la clave equivocada. Va la **secreta**, que empieza con `sb_secret_` |
 | El QR de WhatsApp no aparece | Esperá 10 segundos. Si sigue igual, tocá **Conectar** de nuevo |

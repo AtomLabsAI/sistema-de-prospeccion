@@ -22,6 +22,16 @@ export async function POST(pedido: Request, { params }: Contexto) {
   if (!leerConfig().whatsapp.aceptoRiesgo) {
     return NextResponse.json({ error: "Primero aceptá el aviso de riesgo." }, { status: 403 });
   }
+  // El asistente guarda sus datos con el SQLite que Node trae desde la 22.13.
+  const [mayor, menor] = process.versions.node.split(".").map(Number);
+  if (mayor < 22 || (mayor === 22 && menor < 13)) {
+    return NextResponse.json(
+      {
+        error: `WhatsApp necesita Node 22.13 o más y esta compu tiene la ${process.versions.node}. Instalá la última desde nodejs.org, cerrá el dashboard y volvé a abrirlo.`,
+      },
+      { status: 400 },
+    );
+  }
   await iniciar(n);
   return NextResponse.json(await estadoNumero(n));
 }

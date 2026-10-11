@@ -33,9 +33,14 @@ Stack: Next.js (App Router, sin Cache Components), TypeScript, Tailwind v4, Supa
 
 ## Cómo agregar cosas
 
-- **Una tabla o columna:** sumala a `supabase/schema.sql` de forma que se pueda correr de nuevo (`create table if not exists`, `add column if not exists`), activale RLS y aplicala al proyecto de la persona. Actualizá el tipo en `src/lib/tipos.ts`.
+- **Una tabla o columna:** sumala a `supabase/schema.sql` de forma que se pueda correr de nuevo (`create table if not exists`, `add column if not exists`), activale RLS, dale permiso a `service_role` (`grant select, insert, update, delete on public.<tabla> to service_role`; sin eso Supabase responde "permission denied") y aplicala al proyecto de la persona. Actualizá el tipo en `src/lib/tipos.ts`.
 - **Una pantalla:** carpeta en `src/app/`, envolvé el contenido que use datos con `<PuertaBase>` y agregala a `SECCIONES` en `src/components/menu.tsx`.
 - **Un formulario:** `FormAccion` + `BotonEnviar`, con una acción en `src/acciones/` que devuelva `bien(...)` o `mal(...)` en palabras que entienda alguien que no programa.
+
+## Si algo no anda
+
+- **Un número de WhatsApp no arranca:** mirá `.whatsapp/numero-N/asistente.log`. Necesita Node 22.13 o más.
+- **"permission denied for table":** a esa tabla le falta el `grant` a `service_role`. Volvé a aplicar `supabase/schema.sql`.
 
 ## Diseño
 

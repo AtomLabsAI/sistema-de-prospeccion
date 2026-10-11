@@ -101,9 +101,9 @@ export default async function GuiaWhatsApp() {
           >
             WhatsApp Assistant
           </a>
-          , en tu compu. La sesión se guarda en la carpeta .whatsapp de este proyecto y no sale de
-          ahí. Si apagás la compu, los números se desconectan hasta que vuelvas a abrir el
-          dashboard.
+          , en tu compu. La sesión y una copia de los chats de la última semana de ese número se
+          guardan en la carpeta .whatsapp de este proyecto y no salen de ahí. Si apagás la compu,
+          los números se desconectan hasta que vuelvas a abrir el dashboard.
         </Nota>
       </section>
 

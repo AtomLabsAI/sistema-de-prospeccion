@@ -39,9 +39,15 @@ export default function GuiaMetaAds() {
           </Paso>
           <Paso n={3} titulo="Entrá con tu cuenta de Meta Business">
             <p>
-              Para empezar elegí <strong>solo lectura</strong>: Claude ve tus campañas pero no puede
-              cambiar nada.
+              Elegí solo las cuentas publicitarias que quieras que Claude vea. El conector queda con
+              los mismos permisos que tu usuario: para que no cambie nada sin preguntarte, en los
+              ajustes del conector dejá las herramientas que modifican en{" "}
+              <strong>pedir aprobación</strong>.
             </p>
+            <Nota>
+              Meta lo está habilitando de a poco. Si tu cuenta todavía no lo tiene, probá más
+              adelante: el resto del dashboard funciona igual.
+            </Nota>
           </Paso>
           <Paso n={4} titulo="Reiniciá Claude Code y probá">
             <div className="flex flex-wrap items-center gap-3">

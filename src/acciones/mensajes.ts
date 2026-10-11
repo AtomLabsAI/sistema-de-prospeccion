@@ -119,7 +119,9 @@ export async function aprobarMensaje(_: Resultado, datos: FormData): Promise<Res
         return mal("Ese número no está conectado.");
       }
       telefono = normalizarTelefono(mensaje.prospectos?.telefono) ?? "";
-      if (!telefono) return mal("El teléfono no tiene código de país. Corregilo o salteá el mensaje.");
+      if (!telefono) {
+        return mal("El teléfono no tiene código de país. Salteá este mensaje y cargá de nuevo el prospecto con el + adelante.");
+      }
       if ((await enviadosHoy(db, "whatsapp", numero)) >= config.whatsapp.topePorNumero) {
         return mal(`Ese número ya llegó al tope de hoy (${config.whatsapp.topePorNumero}). Seguí mañana.`);
       }

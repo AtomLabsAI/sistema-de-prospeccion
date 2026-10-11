@@ -39,11 +39,24 @@ export async function estadoBase(): Promise<{ estado: EstadoBase; detalle?: stri
     const { error } = await db.from("prospectos").select("id").limit(1);
     if (!error) return { estado: "lista" };
     // PGRST205 / 42P01: la conexión anda pero las tablas no existen todavía.
-    if (error.code === "PGRST205" || error.code === "42P01") return { estado: "sin_tablas" };
-    return { estado: "error", detalle: error.message };
+    // 42501: existen pero sin permiso para la clave secreta. Se arregla igual:
+    // corriendo el SQL de las tablas, que también da los permisos.
+    if (["PGRST205", "42P01", "42501"].includes(error.code)) return { estado: "sin_tablas" };
+    return { estado: "error", detalle: explicar(error.message) };
   } catch (e) {
-    return { estado: "error", detalle: e instanceof Error ? e.message : "No se pudo conectar." };
+    return { estado: "error", detalle: explicar(e instanceof Error ? e.message : "") };
   }
+}
+
+// Los errores más comunes al conectar, en palabras que se entiendan.
+function explicar(mensaje: string): string {
+  if (/invalid api key/i.test(mensaje)) {
+    return "Supabase no reconoce esa clave. Copiala de nuevo desde API Keys, en la parte de Secret keys.";
+  }
+  if (/fetch failed|enotfound|invalid url/i.test(mensaje)) {
+    return "No pudimos llegar a esa URL. Revisá que sea la de tu proyecto (termina en .supabase.co) y que tengas internet.";
+  }
+  return mensaje || "No se pudo conectar.";
 }
 
 // Atajo para consultas: devuelve los datos o tira el error de Supabase.

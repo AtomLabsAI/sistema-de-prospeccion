@@ -22,9 +22,17 @@ function esClavePublica(key: string): boolean {
 }
 
 export async function guardarSupabase(_: Resultado, datos: FormData): Promise<Resultado> {
-  const url = texto(datos, "url").replace(/\/+$/, "");
+  let url = texto(datos, "url");
   const key = texto(datos, "key") || leerConfig().supabase.key;
   if (!url.startsWith("https://")) return mal("La URL del proyecto tiene que empezar con https://");
+  // Si pegaron la dirección del panel (supabase.com/dashboard/project/abcd),
+  // se arma la del proyecto. Y de la URL solo se usa el dominio.
+  const panel = /supabase\.com\/dashboard\/project\/([a-z0-9]+)/.exec(url);
+  try {
+    url = panel ? `https://${panel[1]}.supabase.co` : new URL(url).origin;
+  } catch {
+    return mal("Esa URL no es válida. Tiene esta forma: https://abcdefgh.supabase.co");
+  }
   if (!key) return mal("Falta pegar la clave secreta.");
   if (esClavePublica(key)) {
     return mal("Esa es la clave pública. Necesitás la secreta: empieza con sb_secret_.");
@@ -40,7 +48,7 @@ export async function verificarBase(): Promise<Resultado> {
   if (estado === "lista") return bien("Base conectada y con las tablas creadas.");
   if (estado === "sin_tablas") return bien("Conexión correcta. Falta el paso 3: crear las tablas.");
   if (estado === "sin_configurar") return mal("Falta pegar la URL y la clave.");
-  return mal(`Supabase respondió con un error: ${detalle}`);
+  return mal(detalle ?? "No se pudo conectar con Supabase.");
 }
 
 export async function guardarApify(_: Resultado, datos: FormData): Promise<Resultado> {

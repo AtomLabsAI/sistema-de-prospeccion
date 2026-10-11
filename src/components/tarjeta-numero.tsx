@@ -29,6 +29,7 @@ export function TarjetaNumero({
   const router = useRouter();
   const [estado, setEstado] = useState(inicial);
   const [error, setError] = useState("");
+  const [lanzado, setLanzado] = useState(false);
   const { numero } = inicial;
   const enProceso = estado.conexion === "iniciando" || estado.conexion === "esperando_qr";
 
@@ -38,7 +39,11 @@ export function TarjetaNumero({
       async () => {
         try {
           const r = await fetch(`/api/whatsapp/${numero}`, { cache: "no-store" });
-          if (r.ok && vivo) setEstado(await r.json());
+          if (!r.ok || !vivo) return;
+          const nuevo: EstadoNumero = await r.json();
+          setEstado(nuevo);
+          // Ya respondió: si después se apaga, no es porque no haya arrancado.
+          if (nuevo.conexion !== "iniciando" && nuevo.conexion !== "apagado") setLanzado(false);
         } catch {
           // El dashboard se está reiniciando: se reintenta en la próxima vuelta.
         }
@@ -62,8 +67,10 @@ export function TarjetaNumero({
     try {
       const r = await fetch(`/api/whatsapp/${numero}`, { method: "POST" });
       const cuerpo = await r.json();
-      if (r.ok) setEstado(cuerpo);
-      else {
+      if (r.ok) {
+        setEstado(cuerpo);
+        setLanzado(true);
+      } else {
         setError(cuerpo.error ?? "No se pudo iniciar.");
         setEstado(inicial);
       }
@@ -106,6 +113,13 @@ export function TarjetaNumero({
         </button>
       )}
       {error && <p className="text-sm font-semibold text-naranja">{error}</p>}
+      {/* Se tocó Conectar y el asistente no llegó a arrancar. */}
+      {lanzado && !error && estado.conexion === "apagado" && (
+        <p className="text-sm font-semibold text-naranja">
+          No arrancó. Probá de nuevo; si sigue igual, decile a Claude: &quot;el WhatsApp número{" "}
+          {numero} no arranca&quot;.
+        </p>
+      )}
     </div>
   );
 }

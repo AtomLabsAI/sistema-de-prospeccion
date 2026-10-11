@@ -122,6 +122,18 @@ alter table public.planilla_columnas enable row level security;
 alter table public.planilla_filas    enable row level security;
 alter table public.ads_campanas      enable row level security;
 
+-- En los proyectos nuevos, Supabase ya no le da permiso a nadie sobre las
+-- tablas recién creadas: hay que dárselo a mano. Solo a service_role, que es
+-- el rol de la clave secreta. A la clave pública (anon, authenticated) no.
+grant select, insert, update, delete on public.prospectos        to service_role;
+grant select, insert, update, delete on public.plantillas        to service_role;
+grant select, insert, update, delete on public.mensajes          to service_role;
+grant select, insert, update, delete on public.llamadas          to service_role;
+grant select, insert, update, delete on public.planillas         to service_role;
+grant select, insert, update, delete on public.planilla_columnas to service_role;
+grant select, insert, update, delete on public.planilla_filas    to service_role;
+grant select, insert, update, delete on public.ads_campanas      to service_role;
+
 -- ---------- Plantillas iniciales ----------
 insert into public.plantillas (canal, asunto, texto) values
   ('whatsapp', null,
@@ -129,3 +141,6 @@ insert into public.plantillas (canal, asunto, texto) values
   ('mail', 'Consulta corta para [negocio]',
    E'Hola, ¿cómo va?\n\nVi [negocio] en Google Maps y quería hacerles una consulta corta. ¿Con quién puedo hablar?\n\nGracias.')
 on conflict (canal) do nothing;
+
+-- Le avisa a Supabase que hay tablas nuevas, para que el dashboard las vea ya.
+notify pgrst, 'reload schema';

@@ -51,8 +51,8 @@ export function guardarConfig(cambios: { [K in keyof Config]?: Partial<Config[K]
   return nuevo;
 }
 
-// Para mostrar una clave guardada sin revelarla entera.
+// Para mostrar una clave guardada sin revelarla: solo los últimos 4 caracteres.
 export function enmascarar(valor: string): string {
   if (!valor) return "";
-  return valor.length <= 8 ? "••••" : `${valor.slice(0, 4)}••••${valor.slice(-4)}`;
+  return valor.length <= 8 ? "••••" : `••••${valor.slice(-4)}`;
 }

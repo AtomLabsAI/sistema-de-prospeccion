@@ -44,13 +44,18 @@ export async function buscarProspectos(_: Resultado, datos: FormData): Promise<R
 export async function agregarProspecto(_: Resultado, datos: FormData): Promise<Resultado> {
   const nombre = texto(datos, "nombre");
   if (!nombre) return mal("Poné al menos el nombre del negocio.");
+  // Sin el código de país, WhatsApp le escribiría a otro número.
+  const telefono = texto(datos, "telefono");
+  if (telefono && !telefono.startsWith("+")) {
+    return mal("Escribí el teléfono con el + y el código de país adelante. Por ejemplo: +54 9 351 555 0101.");
+  }
   try {
     leer(
       await exigirBase()
         .from("prospectos")
         .insert({
           nombre,
-          telefono: texto(datos, "telefono") || null,
+          telefono: telefono || null,
           email: texto(datos, "email") || null,
           ciudad: texto(datos, "ciudad") || null,
           rubro: texto(datos, "rubro") || null,
